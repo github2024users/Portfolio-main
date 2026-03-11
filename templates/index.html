@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block contentname %}
+{% load static %}
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <div class="hero-content">
+        <div class="profile-image">
+            <img src="{% static 'profile.jpg' %}" alt="Deepak Kumar">
+        </div>
+        <h1 class="hero-title"><span class="highlight">Deepak Kumar</span></h1>
+        <p class="hero-subtitle">Software Developer | Python Developer</p>
+        <div class="hero-contact">
+            <div class="contact-item">
+                <span class="icon">📧</span>
+                <span>deepakofficial3142@gmail.com</span>
+            </div>
+            <div class="contact-item">
+                <span class="icon">📱</span>
+                <span>8307431429</span>
+            </div>
+            <div class="contact-item">
+                <span class="icon">📍</span>
+                <span>Burari, Delhi</span>
+            </div>
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+            <a href="#contact" class="cta-button">Get In Touch</a>
+            <a href="#" id="resumeDownloadBtn" class="cta-button cta-button-secondary" onclick="downloadResume(event)">
+                📄 Download Resume
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="content-section">
+    <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="section-divider"></div>
+        <p class="about-text">
+            I am a motivated and dedicated software development enthusiast, proficient in Python and eager to apply my academic knowledge in a professional setting.
+        </p>
+        <p class="about-text">
+            My journey in technology has been driven by curiosity and a passion for creating solutions that make a difference. I believe in continuous learning and staying updated with the latest trends in software development.
+        </p>
+    </div>
+</section>
+
+<!-- Education Section -->
+<section id="education" class="content-section dark">
+    <div class="container">
+        <h2 class="section-title">Education & Training</h2>
+        <div class="section-divider"></div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>Diploma in Computer Engineering</h3>
+                    <p class="institution">G.B.N. Govt Polytechnic Nilokheri, Karnal</p>
+                    <span class="percentage">83.37%</span>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>12th (Non-Medical)</h3>
+                    <p class="institution">Govt. Sr. Sec. School Tehsil Camp, Panipat</p>
+                    <span class="percentage">89.6%</span>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>10th</h3>
+                    <p class="institution">Govt. Sr. Sec. School Tehsil Camp, Panipat</p>
+                    <span class="percentage">69.4%</span>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>Automobile Technician</h3>
+                    <p class="institution">Govt. Sr. Sec. School Tehsil Camp, Panipat</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Training section -->
+<section id="education" class="content-section dark">
+    <div class="container">
+        <h2 class="section-title">Training</h2>
+        <div class="section-divider"></div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Python Programming Language</h3>
+                    <p class="institution">VproTech Digital</p>
+                    <p class="duration">Completed 2 Months Training in Python Programming Language
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="content-section">
+    <div class="container">
+        <h2 class="section-title">Skills & Expertise</h2>
+        <div class="section-divider"></div>
+        <h3 class="skills-category">Technical Skills</h3>
+        <div class="skills-list">
+            <span class="skill-badge">Python</span>
+            <span class="skill-badge">Java</span>
+            <span class="skill-badge">HTML</span>
+            <span class="skill-badge">CSS</span>
+            <span class="skill-badge">JavaScript</span>
+            <span class="skill-badge">JSON</span>
+            <span class="skill-badge">Pandas</span>
+        </div>
+        <h3 class="skills-category">Additional Skills</h3>
+        <div class="skills-list">
+            <span class="skill-badge">Video Editing</span>
+            <span class="skill-badge">Communication</span>
+            <span class="skill-badge">Problem Solving</span>
+        </div>
+        <h3 class="skills-category">Languages</h3>
+        <div class="skills-list">
+            <span class="skill-badge">English</span>
+            <span class="skill-badge">Hindi</span>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="content-section dark">
+    <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="section-divider"></div>
+        {% for i in insert_data %}
+        <div class="project">
+            
+            <div class="project-number"> {{i.project_series}}</div>
+            <h3 class="project-title"> {{i.project_title}}</h3>
+            <p class="project-tech"><strong>Technologies:</strong> {{i.project_technology}} </p>
+            <p class="project-description">
+                {{i.project_desc | safe}}
+            </p>
+            <br>
+            {% if i.project_link %}
+            <a href="{{ i.project_link }}" class="project-link" target="_blank"> <b>LIVE PROJECT</b></a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Contact Section -->
+
+<form method="POST" action="{% url 'contactus' %}">
+{% csrf_token %}
+<section id="contact" class="content-section">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="section-divider"></div>
+        <p class="contact-intro">
+            I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!
+        </p>
+            <div class="contact-form" id="contactForm">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Phone Number</label>
+                <input type="text" id="subject" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">Send Message</button>
+            </div>
+        </form>
+        {% if n %}
+        <div class="alert alert-success" style="padding: 15px; background-color: rgba(34, 197, 94, 0.2); color: #22c55e; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #22c55e;">
+        {{ n }}
+    </div>
+    {% endif %}
+    </div>
+</section>
+
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Load latest resume on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadLatestResume();
+});
+
+// Function to load latest resume from user profile
+async function loadLatestResume() {
+    try {
+        const response = await fetch('/profiledetails/api/get-resume/', {
+            method: 'GET',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.resume_url) {
+            // Resume exists, update the download button
+            const resumeBtn = document.getElementById('resumeDownloadBtn');
+            resumeBtn.href = data.resume_url;
+            resumeBtn.setAttribute('download', data.filename || 'resume.pdf');
+            resumeBtn.style.opacity = '1';
+        }
+    } catch (error) {
+        console.log('Resume not found or user not logged in');
+        // Fallback to static resume
+        const resumeBtn = document.getElementById('resumeDownloadBtn');
+        resumeBtn.href = "{% static 'DEEPAK KUMAR RESUME.pdf' %}";
+        resumeBtn.setAttribute('download', 'Deepak_Kumar_Resume.pdf');
+    }
+}
+
+// Download resume function
+function downloadResume(event) {
+    event.preventDefault();
+    const resumeBtn = document.getElementById('resumeDownloadBtn');
+    const resumeUrl = resumeBtn.href;
+    
+    if (resumeUrl && resumeUrl !== '#') {
+        // Create a temporary anchor element and trigger download
+        const link = document.createElement('a');
+        link.href = resumeUrl;
+        link.download = resumeBtn.getAttribute('download') || 'resume.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        alert('Resume not available. Please try again later.');
+    }
+}
+</script>
+
+{% endblock %}

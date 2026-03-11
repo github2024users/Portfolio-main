@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepak Kumar - Software Developer</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand-wrapper">
+                <img id="navBrandImg" class="nav-brand-img" src="/static/profile.jpg" alt="Profile">
+                <div class="nav-brand">Deepak Kumar</div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'homepage' %}#about">About</a></li>
+                <li><a href="{% url 'homepage' %}#education">Education</a></li>
+                <li><a href="{% url 'homepage' %}#skills">Skills</a></li>
+                <li><a href="{% url 'homepage' %}#projects">Projects</a></li>
+                <li><a href="{% url 'homepage' %}#contact">Contact</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="#" onclick="handleLogout(event)">Logout ({{ user.username }})</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    async function handleLogout(event) {
+        event.preventDefault();
+        
+        try {
+            const response = await fetch('/profiledetails/api/logout/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Redirect to login page after logout
+                window.location.href = '/login';
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+            // Still redirect even if there's an error
+            window.location.href = '/login';
+        }
+    }
+    </script>
